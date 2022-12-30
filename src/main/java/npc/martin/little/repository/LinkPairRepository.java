@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LinkPairRepository extends JpaRepository<LinkPair, Long> {
-    Optional<LinkPair> getByShortUrl(String shortenedUrl);
+    Optional<LinkPair> getByLinkId(String shortenedUrl);
 }
