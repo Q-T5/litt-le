@@ -12,8 +12,8 @@
  The idea and inspiration to create this project comes from a long-time desire to become an independent internet user, and to develop projects that adhere to [The UNIX-Inspired Phillosophy]() specifically, <u>Do One Thing And Do It Well</u>. In regards to the first methioned goal, this project is the first in a line of projects under the code name <u>Project Mephitis</u>\*. This project aims to develop a suite of fully free, open source, self-hostable applications that reduce dependence on third-party services, tools and subscriptions, all while keeping your personal data all to yourself.
  > A <u>Mephitis</u> is the scientific name for a skunk(_Mephitis_ mephitis). Scientists believe skunks to be one of the most independent animals in the world, needing no packs or groups in order to ward of predators or survive.
  ### PROJECT SAMPLE USAGE
- The short video clip below shows how the UI of the project works and how to use the app to shorten your own URLs and use them in real life in your browser(or any app that supports shortened URLs)
- [Sample-Video](https://user-images.githubusercontent.com/98804363/210074874-2a40fdad-a70b-43b4-a574-93874d7491cc.webm)
+ This short video clip shows how the UI of the project works and how to use the app to shorten your own URLs and use them in real life in your browser(or any app that supports shortened URLs)
+ [Sample_Video](https://user-images.githubusercontent.com/98804363/210074874-2a40fdad-a70b-43b4-a574-93874d7491cc.webm)
  ### INSTALLATION GUIDE
  > This guide was written with VPS or self-hosting users mind, and also with a preferential bias towards the Linux space.  
  #### 1. Pre-Requisites
@@ -35,8 +35,10 @@ The project should startup with a console prompts similar to these:
 ```
 nohup java -jar {project-name-version}.jar &
 ```
+***
 This way allows you to close the terminal and still have the app running as a background service with an output similar to this:
 ![Background-Service](https://github.com/Q-T5/litt-le/blob/main/gallery/background-service.png)
+***
 To kill the background service, simply run:
 ```
 killall java
