@@ -1,6 +1,5 @@
 package npc.martin.little.model;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -54,6 +53,11 @@ public class LinkPair implements Serializable {
 
     public LinkPair(Long id, String originalUrl, String shortUrl) {
         this.id = id;
+        this.originalUrl = originalUrl;
+        this.shortUrl = shortUrl;
+    }
+    
+    public LinkPair(String originalUrl, String shortUrl) {
         this.originalUrl = originalUrl;
         this.shortUrl = shortUrl;
     }
