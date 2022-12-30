@@ -1,6 +1,8 @@
 package npc.martin.little.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import java.net.URI;
+import java.net.URISyntaxException;
 import npc.martin.little.model.LinkPair;
 import npc.martin.little.payload.request.ShortenRequest;
 import npc.martin.little.service.ConvenienceService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -43,7 +46,7 @@ public class LittleController {
         
         String shortenedUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
             .path(String.format("/r/%s", linkId))
-            .toString();
+            .toUriString();
         
         newPair.setShortUrl(shortenedUrl);
         newPair.setLinkId(linkId);
@@ -58,22 +61,20 @@ public class LittleController {
         }
     }
     
-    @GetMapping(value = "/{linkId}")
-    public ResponseEntity<?> reverseShortening(@PathVariable String linkId) {
-        try {
-            LinkPair linkPair = linkPairService.getOriginalUrl(linkId).orElseThrow(() -> {
-                throw new RuntimeException("Encountered error while reversing shortened URL");
-            });
-            
-            URI originalLink = new URI(linkPair.getOriginalUrl());
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setLocation(originalLink);
-            
-            return new ResponseEntity(httpHeaders, HttpStatus.SEE_OTHER);
-        } catch(Exception ex) {
-            logger.error("Encountered error while reversing shortened URL");
-            return new ResponseEntity(
-                "Encountered error while reversing shortened URL", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @RequestMapping(value = "/{linkId}")
+    @ResponseStatus(HttpStatus.SEE_OTHER)
+    public ResponseEntity<?> redirectHandler(
+        @PathVariable String linkId, HttpServletResponse httpServletResponse) throws URISyntaxException {
+        
+        LinkPair linkPair = linkPairService.getOriginalUrl(linkId).orElseThrow(() -> {
+           throw new RuntimeException(
+                String.format("Pair with id: %s not found", linkId));
+        });
+        
+        URI originalUrl = new URI(linkPair.getOriginalUrl());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        
+        httpHeaders.setLocation(originalUrl);
+        return new ResponseEntity(httpHeaders, HttpStatus.SEE_OTHER);
     }
 }
