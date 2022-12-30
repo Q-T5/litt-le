@@ -1,5 +1,6 @@
 package npc.martin.little.controller;
 
+import java.net.URI;
 import npc.martin.little.model.LinkPair;
 import npc.martin.little.payload.request.ShortenRequest;
 import npc.martin.little.service.ConvenienceService;
@@ -7,6 +8,7 @@ import npc.martin.little.service.LinkPairService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,7 +61,15 @@ public class LittleController {
     @GetMapping(value = "/{linkId}")
     public ResponseEntity<?> reverseShortening(@PathVariable String linkId) {
         try {
-            linkPairService.getOriginalUrl(linkId);
+            LinkPair linkPair = linkPairService.getOriginalUrl(linkId).orElseThrow(() -> {
+                throw new RuntimeException("Encountered error while reversing shortened URL");
+            });
+            
+            URI originalLink = new URI(linkPair.getOriginalUrl());
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setLocation(originalLink);
+            
+            return new ResponseEntity(httpHeaders, HttpStatus.SEE_OTHER);
         } catch(Exception ex) {
             logger.error("Encountered error while reversing shortened URL");
             return new ResponseEntity(
