@@ -21,6 +21,6 @@ public class LinkPairService {
     }
     
     public Optional<LinkPair> getOriginalUrl(String shortenedUrl) {
-        return linkPairRepository.getByShortUrl(shortenedUrl);
+        return linkPairRepository.getByLinkId(shortenedUrl);
     }
 }
