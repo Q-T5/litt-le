@@ -20,7 +20,7 @@ public class LinkPairService {
         linkPairRepository.save(linkPair);
     }
     
-    public Optional<LinkPair> getOriginalUrl(String shortenedUrl) {
-        return linkPairRepository.getByLinkId(shortenedUrl);
+    public Optional<LinkPair> getOriginalUrl(String linkId) {
+        return linkPairRepository.getByLinkId(linkId);
     }
 }
