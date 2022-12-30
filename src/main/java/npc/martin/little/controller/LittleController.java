@@ -35,13 +35,17 @@ public class LittleController {
     @GetMapping(value = "/shorten")
     public ResponseEntity<?> shortenUrl(@RequestBody ShortenRequest shortenRequest) {
         LinkPair newPair = new LinkPair(
-            shortenRequest.getOriginalUrl(), null);
+            shortenRequest.getOriginalUrl(), null, null);
+        
+        String linkId = convenienceService.generateUniqueId();
         
         String shortenedUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path(String.format("/r/%s", convenienceService.generateUniqueId()))
+            .path(String.format("/r/%s", linkId))
             .toString();
         
         newPair.setShortUrl(shortenedUrl);
+        newPair.setLinkId(linkId);
+        
         try {
             linkPairService.createShortenedUrl(newPair);
             return new ResponseEntity(shortenedUrl, HttpStatus.OK);
@@ -54,6 +58,12 @@ public class LittleController {
     
     @GetMapping(value = "/{linkId}")
     public ResponseEntity<?> reverseShortening(@PathVariable String linkId) {
-        
+        try {
+            linkPairService.getOriginalUrl(linkId);
+        } catch(Exception ex) {
+            logger.error("Encountered error while reversing shortened URL");
+            return new ResponseEntity(
+                "Encountered error while reversing shortened URL", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
