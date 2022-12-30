@@ -9,5 +9,5 @@
 }
 
 .btn-style {
-    @apply bg-green-300 hover:bg-green-500 p-2 rounded-full w-32;
+    @apply bg-green-300 disabled:bg-gray-500 hover:bg-green-500 p-2 rounded-full w-32 font-nunito;
 }
