@@ -1,0 +1,48 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### VueJS ###
+src/little_frontend/node_modules
+src/little_frontend/dist
+src/little_frontend/dist-ssr
+src/little_frontend/.vscode/*
+src/little_frontend/!.vscode/extensions.json
+src/little_frontend/.idea
+src/little_frontend/.DS_Store
+src/little_frontend/*.suo
+src/little_frontend/*.ntvs*
+src/little_frontend/*.njsproj
+src/little_frontend/*.sln
+src/little_frontend/*.sw?
+src/little_frontend/node
