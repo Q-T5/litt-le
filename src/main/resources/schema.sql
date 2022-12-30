@@ -15,8 +15,8 @@ CREATE TABLE `link_pair`(
 --  fields in the table 
     id bigint NOT NULL AUTO_INCREMENT,
     original_url varchar(256) NOT NULL,
-    short_url varchar(32) NOT NULL,
-    link_id varchar(16) NOT NULL,
+    short_url varchar(256) NOT NULL,
+    link_id varchar(32) NOT NULL,
 
 --  table constraints
     CONSTRAINT PRIMARY KEY(`id`)
